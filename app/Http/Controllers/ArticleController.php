@@ -134,7 +134,7 @@ class ArticleController extends Controller
         $file_original_name = $imageName->getClientOriginalName();
         $filename = pathinfo($file_original_name, PATHINFO_FILENAME) . time() . "." .
                     pathinfo($file_original_name, PATHINFO_EXTENSION);
-        $request['image']->move('images', $file_original_name);
+        $request['image']->move('images', $filename);
 
         return $filename;
     }
