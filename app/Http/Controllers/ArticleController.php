@@ -52,34 +52,13 @@ class ArticleController extends Controller
         if($request->hasFile('image')){
 
             $imageName = $request->file('image');
-            
-            $file_original_name = $imageName->getClientOriginalName();
-
-            $filename = pathinfo($file_original_name, PATHINFO_FILENAME).".".pathinfo($file_original_name, PATHINFO_EXTENSION).time();
-
-            $request->image->move('images', $file_original_name);
-
-            // $uploadedImage = uploadImage($imageName, $request);
-
-            // dd($uploadedImage);
-
-            // if($imageName){
-            //     $uploadedImage = uploadImage($imageName, $request);
-
-            //     dd($uploadedImage);
-
-            //     if($uploadedImage){
-            //         return;
-            //     }else{
-            //         return responder()->error('Image Upload Failed')->respond();
-            //     }
-            // }else{
-            //     return responder()->error('The uploaded file is not applicable');
-            // }
+            if($imageName){
+                $filename = $this->uploadImage($imageName, $request);
+                return Article::create($request->except('image')+['image' => $filename]);
+            }else{
+                return responder()->error('The uploaded file is not applicable');
+            }
         }
-        $request->image = $filename;
-
-        return Article::create($request->all());
     }
 
     /**
@@ -150,16 +129,13 @@ class ArticleController extends Controller
         }
     }
 
-    // function uploadImage($imageName, Request $request){
+    public function uploadImage($imageName, $request){
 
-    //     $file_original_name = $imageName->getClientOriginalName();
-    //     dd($file_original_name);
+        $file_original_name = $imageName->getClientOriginalName();
+        $filename = pathinfo($file_original_name, PATHINFO_FILENAME) . time() . "." .
+                    pathinfo($file_original_name, PATHINFO_EXTENSION);
+        $request['image']->move('images', $file_original_name);
 
-    //     $filename = pathinfo($file_original_name, getPathInfo()) . "." .pathinfo($file_original_name, getClientOriginalExtension());
-    //     dd($filename);
-
-    //     $request->image->move(public_path('images'), $file_original_name);
-
-    //     return $filename;
-    // }
+        return $filename;
+    }
 }
