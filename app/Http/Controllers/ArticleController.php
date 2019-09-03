@@ -88,7 +88,6 @@ class ArticleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id){
-
         $this->validate($request, [
             'main_title' => 'required',
             'secondary_title' => 'required',
@@ -98,8 +97,29 @@ class ArticleController extends Controller
         ]);
 
         $article = Article::findOrFail($id);
-        $article->update($request->all());
-        return $article;
+
+        if($request->hasFile('image')){
+
+            $imageName = $request->file('image');
+            dd($imageName->getClientOriginalName());
+
+            if($imageName){
+                if($imageName == $request->image){ //if new img has the same name as the old one
+                    $filename = $this->uploadImage($imageName, $request);
+                    dd($filename);
+                    
+
+                }else{ //if different
+                    $filename = $this->uploadImage($imageName, $request);
+                    return $article->update($request->except('image')+['image' => $filename]);
+                }
+            }else{
+                return responder()->error('The uploaded file is not applicable');
+            }
+        }
+        // $article->update($request->all());
+        // return $article;
+
         // if($article){
         //     return responder()->success($article, ArticleTransformer::class)
         //         ->with('Author')->only(['Author'=>['Name','Email Address','Location']])->respond();
