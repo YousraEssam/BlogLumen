@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use League\Fractal\Manager;
 use App\Transformers\ArticleTransformer;
 use App\Article;
 use Illuminate\Http\Request;
@@ -97,26 +96,19 @@ class ArticleController extends Controller
         ]);
 
         $article = Article::findOrFail($id);
-
+        
         if($request->hasFile('image')){
 
             $imageName = $request->file('image');
-            dd($imageName->getClientOriginalName());
 
-            if($imageName){
-                if($imageName == $request->image){ //if new img has the same name as the old one
-                    $filename = $this->uploadImage($imageName, $request);
-                    dd($filename);
-                    
-
-                }else{ //if different
-                    $filename = $this->uploadImage($imageName, $request);
-                    return $article->update($request->except('image')+['image' => $filename]);
-                }
-            }else{
-                return responder()->error('The uploaded file is not applicable');
-            }
+            $filename = $this->uploadImage($imageName, $request);
+            $article->update($request->except('image')+['image' => $filename]);
+            return $article;
+                
+        }else{
+            return responder()->error('The uploaded image file is not applicable')->respond();
         }
+            
         // $article->update($request->all());
         // return $article;
 
@@ -154,8 +146,9 @@ class ArticleController extends Controller
         $file_original_name = $imageName->getClientOriginalName();
         $filename = pathinfo($file_original_name, PATHINFO_FILENAME) . time() . "." .
                     pathinfo($file_original_name, PATHINFO_EXTENSION);
+            
         $request['image']->move('images', $filename);
-
+        
         return $filename;
     }
 }
