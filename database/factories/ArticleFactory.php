@@ -15,6 +15,7 @@ $factory->define(Article::class, function (Faker $faker) {
         'content' => $faker->text(),
         'image' => $faker->image(),
         'author_id' => $author_id,
+        // 'region_id' => Region::all()->random()->id,
         // 'author_id' => $faker->numberBetween($min = 1, $max = 5),
     ];
 });
