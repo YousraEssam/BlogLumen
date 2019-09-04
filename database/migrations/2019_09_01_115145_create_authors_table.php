@@ -22,6 +22,8 @@ class CreateAuthorsTable extends Migration
             $table->string('location',100);
             $table->integer('latest_article_published')->nullable();
             $table->timestamps();
+            $table->softDeletes();
+
         });
     }
 

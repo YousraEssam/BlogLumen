@@ -20,6 +20,8 @@ class CreateArticlesTable extends Migration
             $table->string('content');
             $table->string('image');
             $table->unsignedBigInteger('author_id');
+            $table->timestamps();
+            $table->softDeletes();
         });
 
     }

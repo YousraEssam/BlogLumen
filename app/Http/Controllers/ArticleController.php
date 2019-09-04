@@ -37,7 +37,7 @@ class ArticleController extends Controller
             'main_title' => 'required',
             'secondary_title' => 'required',
             'content' => 'required',
-            'image' => 'required',
+            'image' => 'required|image',
             'author_id' => 'required|integer'
         ]);
 
@@ -48,9 +48,9 @@ class ArticleController extends Controller
         // }else{
         //     return responder()->error('Creation Failed')->respond();
         // }
-        if($request->hasFile('image')){
+        if($request->hasFile('image') || $request['image']){
 
-            $imageName = $request->file('image');
+            $imageName = $request->file('image') ?? $request['image'];
             if($imageName){
                 $filename = $this->uploadImage($imageName, $request);
                 return Article::create($request->except('image')+['image' => $filename]);
@@ -59,7 +59,6 @@ class ArticleController extends Controller
             }
         }
     }
-
     /**
      * Display the specified resource.
      *
@@ -91,33 +90,25 @@ class ArticleController extends Controller
             'main_title' => 'required',
             'secondary_title' => 'required',
             'content' => 'required',
-            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'image' => 'required|image',
             'author_id' => 'required|integer'
         ]);
 
         $article = Article::findOrFail($id);
         
-        if($request->hasFile('image')){
+        if($request->hasFile('image') || $request['image']){
 
-            $imageName = $request->file('image');
+            $imageName = $request->file('image') ?? $request['image'];
 
             $filename = $this->uploadImage($imageName, $request);
             $article->update($request->except('image')+['image' => $filename]);
-            return $article;
+            // return $article;
+            return responder()->success($article, ArticleTransformer::class)
+                ->with('Author')->only(['Author'=>['Name','Email Address','Location']])->respond();
                 
         }else{
             return responder()->error('The uploaded image file is not applicable')->respond();
         }
-            
-        // $article->update($request->all());
-        // return $article;
-
-        // if($article){
-        //     return responder()->success($article, ArticleTransformer::class)
-        //         ->with('Author')->only(['Author'=>['Name','Email Address','Location']])->respond();
-        // }else{
-        //     return responder()->error('Update Failed')->respond();
-        // }
     }
     /**
      * Remove the specified resource from storage.
@@ -125,7 +116,7 @@ class ArticleController extends Controller
      * @param  \App\Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id){
+    public function softDelete($id){
 
         $article = Article::findOrFail($id)->delete();
         if($article){
@@ -141,7 +132,7 @@ class ArticleController extends Controller
         }
     }
 
-    public function uploadImage($imageName, $request){
+    private function uploadImage($imageName, $request){
 
         $file_original_name = $imageName->getClientOriginalName();
         $filename = pathinfo($file_original_name, PATHINFO_FILENAME) . time() . "." .

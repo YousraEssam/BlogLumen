@@ -8,7 +8,6 @@ class AuthorTest extends TestCase
     public function testShouldReturnAllAuthors(){
         $response = $this->get("api/authors", []);
         $this->assertEquals(200,$this->response->status());        
-
     }
     /**
      * /api/authors/id [GET]
@@ -31,7 +30,7 @@ class AuthorTest extends TestCase
      */
     public function testShouldUpdateAuthor(){
         $parameters = factory('App\Author')->make()->toArray();
-        $response = $this->put('api/authors/8', $parameters, []);
+        $response = $this->put('api/authors/5', $parameters, []);
         $this->assertEquals(200,$this->response->status()); 
     }
     /**
@@ -41,6 +40,5 @@ class AuthorTest extends TestCase
         
         $response = $this->delete("api/authors/3", [], []);
         $this->assertEquals(202,$this->response->status());
-        // $this->seeStatusCode(202);
     }
 }

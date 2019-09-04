@@ -20,7 +20,7 @@ $router->group(['prefix' => 'api/authors'], function () use ($router) {
     $router->post('/', 'AuthorController@store');
     $router->get('{author}', 'AuthorController@show');
     $router->put('{author}', 'AuthorController@update');
-    $router->delete('{author}', 'AuthorController@destroy');
+    $router->delete('{author}', 'AuthorController@softDelete');
 });
 
 $router->group(['prefix' => 'api/articles'], function () use ($router) {
@@ -28,5 +28,5 @@ $router->group(['prefix' => 'api/articles'], function () use ($router) {
     $router->post('/', 'ArticleController@store');
     $router->get('{article}', 'ArticleController@show');
     $router->put('{article}', 'ArticleController@update');
-    $router->delete('{article}', 'ArticleController@destroy');
+    $router->delete('{article}', 'ArticleController@softDelete');
 });

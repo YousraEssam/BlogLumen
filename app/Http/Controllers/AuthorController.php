@@ -74,10 +74,8 @@ class AuthorController extends Controller
      * @param  \App\Author  $author
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function softDelete($id)
     {
-        // Author::findOrFail($id)->delete();
-        // return response('Deleted Successfully', 200);
         $author = Author::findOrFail($id)->delete();
         if($author){
             return response([
