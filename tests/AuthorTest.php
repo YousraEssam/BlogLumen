@@ -6,15 +6,16 @@ class AuthorTest extends TestCase
      * /api/authors [GET]
      */
     public function testShouldReturnAllAuthors(){
-        $this->get("api/authors", []);
-        $this->seeStatusCode(200);
+        $response = $this->get("api/authors", []);
+        $this->assertEquals(200,$this->response->status());        
+
     }
     /**
      * /api/authors/id [GET]
      */
     public function testShouldReturnAuthor(){
         $this->get("api/authors/2", []);
-        $this->seeStatusCode(200);
+        $this->assertEquals(200,$this->response->status());        
     }
     /**
      * /api/authors [POST]
