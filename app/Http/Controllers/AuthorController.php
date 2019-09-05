@@ -81,12 +81,12 @@ class AuthorController extends Controller
             return response([
                 'status' => 410,
                 'message' => 'Deleted Successfully'
-            ],202);
+            ],200);
         }else{
             return response([
                 'status' => 204,
                 'message' => 'Deletion Failed'
-            ],202);  
+            ],200);  
         }
     }
 }

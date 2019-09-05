@@ -49,7 +49,7 @@ class ArticleController extends Controller
         //     return responder()->error('Creation Failed')->respond();
         // }
         if($request->hasFile('image') || $request['image']){
-
+            
             $imageName = $request->file('image') ?? $request['image'];
             if($imageName){
                 $filename = $this->uploadImage($imageName, $request);
@@ -123,12 +123,12 @@ class ArticleController extends Controller
             return response([
                 'status' => 410,
                 'message' => 'Deleted Successfully'
-            ],202);
+            ],200);
         }else{
             return response([
                 'status' => 204,
                 'message' => 'Deletion Failed'
-            ],202);  
+            ],200);
         }
     }
 
@@ -138,8 +138,7 @@ class ArticleController extends Controller
         $filename = pathinfo($file_original_name, PATHINFO_FILENAME) . time() . "." .
                     pathinfo($file_original_name, PATHINFO_EXTENSION);
             
-        $request['image']->move('images', $filename);
-        
+        $request['image']->move('public/images', $filename);
         return $filename;
     }
 }
