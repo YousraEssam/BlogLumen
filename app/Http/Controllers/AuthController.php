@@ -6,6 +6,9 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Tymon\JWTAuth\JWTAuth;
 
+/** 
+*  @group Login routes
+*/
 class AuthController extends Controller
 {
     /**

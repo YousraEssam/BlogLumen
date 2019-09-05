@@ -6,12 +6,18 @@ use App\Author;
 use App\Transformers\AuthorTransformer;
 use Illuminate\Http\Request;
 
+/**
+ * @group Authors management
+ *
+ * APIs for managing authors
+ */
+
 class AuthorController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * List All Authors.
+     * @transformercollection \App\Transformers\AuthorTransformer
+     * @authenticated
      */
     public function index()
     {
@@ -21,10 +27,13 @@ class AuthorController extends Controller
         return responder()->success($authors, AuthorTransformer::class)->respond();
     }
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Create and Store a newly created Author.
+     * @transformercollection \App\Transformers\AuthorTransformer
+     * @bodyParam name       string     required The name of the author.
+     * @bodyParam email      email      required The email of the author.
+     * @bodyParam password   string     required The password of the author.
+     * @bodyParam location   string     required The location of the author.
+     * @authenticated
      */
     public function store(Request $request)
     {
@@ -34,18 +43,24 @@ class AuthorController extends Controller
             'password' => 'required',
             'location' => 'required',
         ]);
-        $author = Author::create($request->all());
+
+        $created_author = Author::create($request->all());
         $hashedPass = app('hash')->make($request->password);
-        $author['password'] = $hashedPass;
-        $author->save();
-        return $author;
+        $created_author['password'] = $hashedPass;
+        $created_author->save();
+        if($created_author){
+            return responder()
+                ->success($created_author, AuthorTransformer::class)
+                ->respond();
+        }else{
+            return responder()->error('Creation Failed')->respond();
+        }
     }
 
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Author  $author
-     * @return \Illuminate\Http\Response
+     * Display a specific Author using Author ID.
+     * @transformercollection \App\Transformers\AuthorTransformer
+     * @authenticated
      */
     public function show($id)
     {
@@ -57,39 +72,38 @@ class AuthorController extends Controller
         }
     }
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Author  $author
-     * @return \Illuminate\Http\Response
+     * Update a specific Author using Author ID.
+     * @transformercollection \App\Transformers\AuthorTransformer
+     * @bodyParam name       string     required The name of the author.
+     * @bodyParam email      email     required The email of the author.
+     * @bodyParam password   string     required The password of the author.
+     * @bodyParam location   string     required The location of the author.
+     * @authenticated
      */
     public function update(Request $request, $id)
     {
         $author = Author::findOrFail($id);
         $author->update($request->all());
-        // dd($author);
-        return response()->json($author, 200);
+        if($author){
+                return responder()->success($author, AuthorTransformer::class)
+                ->with('Author')->only(['Author'=>['Name','Email Address','Location']])->respond();     
+        }else{
+            responder()->error('Update Failed')->respond();
+        }
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Author  $author
-     * @return \Illuminate\Http\Response
+     * Remove a specific Author using Author ID.
+     * @authenticated
+     * @transformercollection \App\Transformers\AuthorTransformer
      */
     public function softDelete($id)
     {
         $author = Author::findOrFail($id)->delete();
         if($author){
-            return response([
-                'status' => 410,
-                'message' => 'Deleted Successfully'
-            ],200);
+            return responder()->success($author, AuthorTransformer::class)->respond();
         }else{
-            return response([
-                'status' => 204,
-                'message' => 'Deletion Failed'
-            ],200);  
+            responder()->error('Delete Failed')->respond();
         }
     }
 }

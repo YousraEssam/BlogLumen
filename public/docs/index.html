@@ -1,0 +1,863 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>API Reference</title>
+
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/all.js"></script>
+
+
+          <script>
+        $(function() {
+            setupLanguages(["bash","javascript"]);
+        });
+      </script>
+      </head>
+
+  <body class="">
+    <a href="#" id="nav-button">
+      <span>
+        NAV
+        <img src="images/navbar.png" />
+      </span>
+    </a>
+    <div class="tocify-wrapper">
+        <img src="images/logo.png" />
+                    <div class="lang-selector">
+                                  <a href="#" data-language-name="bash">bash</a>
+                                  <a href="#" data-language-name="javascript">javascript</a>
+                            </div>
+                            <div class="search">
+              <input type="text" class="search" id="input-search" placeholder="Search">
+            </div>
+            <ul class="search-results"></ul>
+              <div id="toc">
+      </div>
+                    <ul class="toc-footer">
+                                  <li><a href='http://github.com/mpociot/documentarian'>Documentation Powered by Documentarian</a></li>
+                            </ul>
+            </div>
+    <div class="page-wrapper">
+      <div class="dark-box"></div>
+      <div class="content">
+          <!-- START_INFO -->
+<h1>Info</h1>
+<p>Welcome to the generated API reference.
+<a href="http://localhost:8000/docs/collection.json">Get Postman Collection</a></p>
+<!-- END_INFO -->
+<h1>Articles management</h1>
+<p>APIs for managing articles</p>
+<!-- START_4d88adc1b364a9c1d22bf15c71710153 -->
+<h2>List All Articles.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "http://localhost:8000/api/articles" </code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost:8000/api/articles");
+
+let headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "ID": null,
+            "Main title": "Consectetur minima.",
+            "Secondary Title": "Numquam deserunt nam perspiciatis.",
+            "Content": "Rerum corrupti omnis dolorem reiciendis qui non maiores nihil perferendis dolorem excepturi ipsam recusandae.",
+            "Image": "\/tmp\/81e8ae403b49d032908aca3914f41df1.jpg",
+            "Author": {
+                "id": 5,
+                "name": "Charley Abshire Sr.",
+                "email": "conner78@yahoo.com",
+                "Github": "cummerata.rafael@yahoo.com",
+                "twitter": "egraham@yahoo.com",
+                "location": "Haiti",
+                "latest_article_published": null,
+                "created_at": null,
+                "updated_at": null,
+                "deleted_at": null
+            }
+        },
+        {
+            "ID": null,
+            "Main title": "Consectetur minima.",
+            "Secondary Title": "Numquam deserunt nam perspiciatis.",
+            "Content": "Rerum corrupti omnis dolorem reiciendis qui non maiores nihil perferendis dolorem excepturi ipsam recusandae.",
+            "Image": "\/tmp\/81e8ae403b49d032908aca3914f41df1.jpg",
+            "Author": {
+                "id": 5,
+                "name": "Charley Abshire Sr.",
+                "email": "conner78@yahoo.com",
+                "Github": "cummerata.rafael@yahoo.com",
+                "twitter": "egraham@yahoo.com",
+                "location": "Haiti",
+                "latest_article_published": null,
+                "created_at": null,
+                "updated_at": null,
+                "deleted_at": null
+            }
+        }
+    ]
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET /api/articles</code></p>
+<!-- END_4d88adc1b364a9c1d22bf15c71710153 -->
+<!-- START_a2ede58120e213341054ffdeac11ef38 -->
+<h2>Create and Store a newly created Article.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://localhost:8000/api/articles" \
+    -H "Content-Type: application/json" \
+    -d '{"main_title":"aut","secondary_title":"cupiditate","content":"rerum","image":"repellat","author_id":16}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost:8000/api/articles");
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "main_title": "aut",
+    "secondary_title": "cupiditate",
+    "content": "rerum",
+    "image": "repellat",
+    "author_id": 16
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "ID": null,
+            "Main title": "Et ad.",
+            "Secondary Title": "Perferendis doloribus iure dolorum aut mollitia cumque.",
+            "Content": "A placeat reiciendis error aspernatur esse sit qui.",
+            "Image": "\/tmp\/33039fa7aa10b7434e8bac61ff83555f.jpg",
+            "Author": {
+                "id": 2,
+                "name": "Deshaun Rempel",
+                "email": "everette79@wehner.com",
+                "Github": "usauer@hotmail.com",
+                "twitter": "klocko.mohamed@wunsch.com",
+                "location": "Lesotho",
+                "latest_article_published": null,
+                "created_at": null,
+                "updated_at": null,
+                "deleted_at": null
+            }
+        },
+        {
+            "ID": null,
+            "Main title": "Et ad.",
+            "Secondary Title": "Perferendis doloribus iure dolorum aut mollitia cumque.",
+            "Content": "A placeat reiciendis error aspernatur esse sit qui.",
+            "Image": "\/tmp\/33039fa7aa10b7434e8bac61ff83555f.jpg",
+            "Author": {
+                "id": 2,
+                "name": "Deshaun Rempel",
+                "email": "everette79@wehner.com",
+                "Github": "usauer@hotmail.com",
+                "twitter": "klocko.mohamed@wunsch.com",
+                "location": "Lesotho",
+                "latest_article_published": null,
+                "created_at": null,
+                "updated_at": null,
+                "deleted_at": null
+            }
+        }
+    ]
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST /api/articles</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>main_title</td>
+<td>string</td>
+<td>required</td>
+<td>The title of the Article.</td>
+</tr>
+<tr>
+<td>secondary_title</td>
+<td>string</td>
+<td>required</td>
+<td>The title of the post.</td>
+</tr>
+<tr>
+<td>content</td>
+<td>string</td>
+<td>required</td>
+<td>The title of the post.</td>
+</tr>
+<tr>
+<td>image</td>
+<td>image</td>
+<td>required</td>
+<td>This is required and must be an image.</td>
+</tr>
+<tr>
+<td>author_id</td>
+<td>integer</td>
+<td>required</td>
+<td>The ID of an existing author.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_a2ede58120e213341054ffdeac11ef38 -->
+<!-- START_29e1b04617d14937b31d856ddcc9cf63 -->
+<h2>Display a specific Article using Article ID.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "http://localhost:8000/api/articles/1" </code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost:8000/api/articles/1");
+
+let headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "ID": null,
+            "Main title": "Id nihil.",
+            "Secondary Title": "Eius asperiores consequatur ullam officia eius in.",
+            "Content": "Vero nesciunt id et distinctio commodi quia.",
+            "Image": "\/tmp\/89d039e77ca3132d4d329407325fbcd0.jpg",
+            "Author": {
+                "id": 1,
+                "name": "Johnathan Pacocha",
+                "email": "norris.abbott@crist.com",
+                "Github": "xzemlak@yahoo.com",
+                "twitter": "bettie.herman@reinger.com",
+                "location": "Morocco",
+                "latest_article_published": null,
+                "created_at": null,
+                "updated_at": null,
+                "deleted_at": null
+            }
+        },
+        {
+            "ID": null,
+            "Main title": "Id nihil.",
+            "Secondary Title": "Eius asperiores consequatur ullam officia eius in.",
+            "Content": "Vero nesciunt id et distinctio commodi quia.",
+            "Image": "\/tmp\/89d039e77ca3132d4d329407325fbcd0.jpg",
+            "Author": {
+                "id": 1,
+                "name": "Johnathan Pacocha",
+                "email": "norris.abbott@crist.com",
+                "Github": "xzemlak@yahoo.com",
+                "twitter": "bettie.herman@reinger.com",
+                "location": "Morocco",
+                "latest_article_published": null,
+                "created_at": null,
+                "updated_at": null,
+                "deleted_at": null
+            }
+        }
+    ]
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET /api/articles/{article}</code></p>
+<!-- END_29e1b04617d14937b31d856ddcc9cf63 -->
+<!-- START_86bdc262bdee86686f4b8db56a91e792 -->
+<h2>Update a specific Article using Article ID.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X PUT "http://localhost:8000/api/articles/1" \
+    -H "Content-Type: application/json" \
+    -d '{"main_title":"eum","secondary_title":"eum","content":"temporibus","image":"necessitatibus","author_id":9}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost:8000/api/articles/1");
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "main_title": "eum",
+    "secondary_title": "eum",
+    "content": "temporibus",
+    "image": "necessitatibus",
+    "author_id": 9
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "ID": null,
+            "Main title": "Qui consequatur voluptatibus.",
+            "Secondary Title": "Aut aut dignissimos totam.",
+            "Content": "Aut provident omnis nobis magnam molestiae et quidem.",
+            "Image": "\/tmp\/1e75d23304985b6a03a72c82611c0eb3.jpg",
+            "Author": {
+                "id": 2,
+                "name": "Deshaun Rempel",
+                "email": "everette79@wehner.com",
+                "Github": "usauer@hotmail.com",
+                "twitter": "klocko.mohamed@wunsch.com",
+                "location": "Lesotho",
+                "latest_article_published": null,
+                "created_at": null,
+                "updated_at": null,
+                "deleted_at": null
+            }
+        },
+        {
+            "ID": null,
+            "Main title": "Qui consequatur voluptatibus.",
+            "Secondary Title": "Aut aut dignissimos totam.",
+            "Content": "Aut provident omnis nobis magnam molestiae et quidem.",
+            "Image": "\/tmp\/1e75d23304985b6a03a72c82611c0eb3.jpg",
+            "Author": {
+                "id": 2,
+                "name": "Deshaun Rempel",
+                "email": "everette79@wehner.com",
+                "Github": "usauer@hotmail.com",
+                "twitter": "klocko.mohamed@wunsch.com",
+                "location": "Lesotho",
+                "latest_article_published": null,
+                "created_at": null,
+                "updated_at": null,
+                "deleted_at": null
+            }
+        }
+    ]
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PUT /api/articles/{article}</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>main_title</td>
+<td>string</td>
+<td>required</td>
+<td>The title of the Article.</td>
+</tr>
+<tr>
+<td>secondary_title</td>
+<td>string</td>
+<td>required</td>
+<td>The title of the post.</td>
+</tr>
+<tr>
+<td>content</td>
+<td>string</td>
+<td>required</td>
+<td>The title of the post.</td>
+</tr>
+<tr>
+<td>image</td>
+<td>image</td>
+<td>required</td>
+<td>This is required and must be an image.</td>
+</tr>
+<tr>
+<td>author_id</td>
+<td>integer</td>
+<td>required</td>
+<td>The ID of an existing author.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_86bdc262bdee86686f4b8db56a91e792 -->
+<!-- START_9c4d38d4572d6bef97cd652c5d9c5a3b -->
+<h2>Remove a specific Article using Article ID [Soft Delete].</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X DELETE "http://localhost:8000/api/articles/1" </code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost:8000/api/articles/1");
+
+let headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "ID": null,
+            "Main title": "Deserunt debitis.",
+            "Secondary Title": "Minima odit est quae neque deleniti.",
+            "Content": "Libero optio aperiam soluta sapiente inventore omnis necessitatibus amet magni molestias fugiat et non.",
+            "Image": "\/tmp\/efebfc3db788554a428ddaa5dfcbd2ad.jpg",
+            "Author": {
+                "id": 5,
+                "name": "Charley Abshire Sr.",
+                "email": "conner78@yahoo.com",
+                "Github": "cummerata.rafael@yahoo.com",
+                "twitter": "egraham@yahoo.com",
+                "location": "Haiti",
+                "latest_article_published": null,
+                "created_at": null,
+                "updated_at": null,
+                "deleted_at": null
+            }
+        },
+        {
+            "ID": null,
+            "Main title": "Deserunt debitis.",
+            "Secondary Title": "Minima odit est quae neque deleniti.",
+            "Content": "Libero optio aperiam soluta sapiente inventore omnis necessitatibus amet magni molestias fugiat et non.",
+            "Image": "\/tmp\/efebfc3db788554a428ddaa5dfcbd2ad.jpg",
+            "Author": {
+                "id": 5,
+                "name": "Charley Abshire Sr.",
+                "email": "conner78@yahoo.com",
+                "Github": "cummerata.rafael@yahoo.com",
+                "twitter": "egraham@yahoo.com",
+                "location": "Haiti",
+                "latest_article_published": null,
+                "created_at": null,
+                "updated_at": null,
+                "deleted_at": null
+            }
+        }
+    ]
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>DELETE /api/articles/{article}</code></p>
+<!-- END_9c4d38d4572d6bef97cd652c5d9c5a3b -->
+<h1>Authors management</h1>
+<p>APIs for managing authors</p>
+<!-- START_39f8580c5453a9c195376f67d364defc -->
+<h2>List All Authors.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "http://localhost:8000/api/authors" </code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost:8000/api/authors");
+
+let headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "ID": null,
+            "Name": "Aurore King",
+            "Email Address": "madge38@hotmail.com",
+            "GitHub Account": null,
+            "Twitter Account": "katelyn.keeling@kuhic.com",
+            "Location": "Martinique"
+        },
+        {
+            "ID": null,
+            "Name": "Aurore King",
+            "Email Address": "madge38@hotmail.com",
+            "GitHub Account": null,
+            "Twitter Account": "katelyn.keeling@kuhic.com",
+            "Location": "Martinique"
+        }
+    ]
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET /api/authors</code></p>
+<!-- END_39f8580c5453a9c195376f67d364defc -->
+<!-- START_92db2c495ad40c50efa5ed9e84fd2362 -->
+<h2>Create and Store a newly created Author.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://localhost:8000/api/authors" \
+    -H "Content-Type: application/json" \
+    -d '{"name":"perspiciatis","email":"magni","password":"illum","location":"ullam"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost:8000/api/authors");
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "name": "perspiciatis",
+    "email": "magni",
+    "password": "illum",
+    "location": "ullam"
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "ID": null,
+            "Name": "Lela Hyatt",
+            "Email Address": "skiles.aylin@yahoo.com",
+            "GitHub Account": null,
+            "Twitter Account": "rmuller@hotmail.com",
+            "Location": "Ethiopia"
+        },
+        {
+            "ID": null,
+            "Name": "Lela Hyatt",
+            "Email Address": "skiles.aylin@yahoo.com",
+            "GitHub Account": null,
+            "Twitter Account": "rmuller@hotmail.com",
+            "Location": "Ethiopia"
+        }
+    ]
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST /api/authors</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>required</td>
+<td>The name of the author.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>email</td>
+<td>required</td>
+<td>The email of the author.</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>required</td>
+<td>The password of the author.</td>
+</tr>
+<tr>
+<td>location</td>
+<td>string</td>
+<td>required</td>
+<td>The location of the author.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_92db2c495ad40c50efa5ed9e84fd2362 -->
+<!-- START_8d43228880451a267c473e1a09e763a9 -->
+<h2>Display a specific Author using Author ID.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X GET -G "http://localhost:8000/api/authors/1" </code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost:8000/api/authors/1");
+
+let headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "GET",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "ID": null,
+            "Name": "Miss Daphne King II",
+            "Email Address": "gmaggio@yahoo.com",
+            "GitHub Account": null,
+            "Twitter Account": "marquardt.janelle@klocko.com",
+            "Location": "Greece"
+        },
+        {
+            "ID": null,
+            "Name": "Miss Daphne King II",
+            "Email Address": "gmaggio@yahoo.com",
+            "GitHub Account": null,
+            "Twitter Account": "marquardt.janelle@klocko.com",
+            "Location": "Greece"
+        }
+    ]
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>GET /api/authors/{author}</code></p>
+<!-- END_8d43228880451a267c473e1a09e763a9 -->
+<!-- START_c0ddb2e291adb39b416e0e63e0ddb734 -->
+<h2>Update a specific Author using Author ID.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X PUT "http://localhost:8000/api/authors/1" \
+    -H "Content-Type: application/json" \
+    -d '{"name":"provident","email":"itaque","password":"aut","location":"quia"}'
+</code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost:8000/api/authors/1");
+
+let headers = {
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+}
+
+let body = {
+    "name": "provident",
+    "email": "itaque",
+    "password": "aut",
+    "location": "quia"
+}
+
+fetch(url, {
+    method: "PUT",
+    headers: headers,
+    body: body
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "ID": null,
+            "Name": "Ms. Martina Macejkovic",
+            "Email Address": "bauch.amparo@gmail.com",
+            "GitHub Account": null,
+            "Twitter Account": "emely93@berge.com",
+            "Location": "Macao"
+        },
+        {
+            "ID": null,
+            "Name": "Ms. Martina Macejkovic",
+            "Email Address": "bauch.amparo@gmail.com",
+            "GitHub Account": null,
+            "Twitter Account": "emely93@berge.com",
+            "Location": "Macao"
+        }
+    ]
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>PUT /api/authors/{author}</code></p>
+<h4>Body Parameters</h4>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Type</th>
+<th>Status</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>name</td>
+<td>string</td>
+<td>required</td>
+<td>The name of the author.</td>
+</tr>
+<tr>
+<td>email</td>
+<td>email</td>
+<td>required</td>
+<td>The email of the author.</td>
+</tr>
+<tr>
+<td>password</td>
+<td>string</td>
+<td>required</td>
+<td>The password of the author.</td>
+</tr>
+<tr>
+<td>location</td>
+<td>string</td>
+<td>required</td>
+<td>The location of the author.</td>
+</tr>
+</tbody>
+</table>
+<!-- END_c0ddb2e291adb39b416e0e63e0ddb734 -->
+<!-- START_00ff0e50c58abe4f5df36931794ec68c -->
+<h2>Remove a specific Author using Author ID.</h2>
+<p><br><small style="padding: 1px 9px 2px;font-weight: bold;white-space: nowrap;color: #ffffff;-webkit-border-radius: 9px;-moz-border-radius: 9px;border-radius: 9px;background-color: #3a87ad;">Requires authentication</small></p>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X DELETE "http://localhost:8000/api/authors/1" </code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost:8000/api/authors/1");
+
+let headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "DELETE",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<blockquote>
+<p>Example response (200):</p>
+</blockquote>
+<pre><code class="language-json">{
+    "data": [
+        {
+            "ID": null,
+            "Name": "Camron O'Reilly",
+            "Email Address": "harmon.bogisich@gaylord.org",
+            "GitHub Account": null,
+            "Twitter Account": "bjacobs@fisher.com",
+            "Location": "Pitcairn Islands"
+        },
+        {
+            "ID": null,
+            "Name": "Camron O'Reilly",
+            "Email Address": "harmon.bogisich@gaylord.org",
+            "GitHub Account": null,
+            "Twitter Account": "bjacobs@fisher.com",
+            "Location": "Pitcairn Islands"
+        }
+    ]
+}</code></pre>
+<h3>HTTP Request</h3>
+<p><code>DELETE /api/authors/{author}</code></p>
+<!-- END_00ff0e50c58abe4f5df36931794ec68c -->
+<h1>Login routes</h1>
+<!-- START_ac6527c96d4b9793a4c77ff1e22a8906 -->
+<h2>/auth/login</h2>
+<blockquote>
+<p>Example request:</p>
+</blockquote>
+<pre><code class="language-bash">curl -X POST "http://localhost:8000/auth/login" </code></pre>
+<pre><code class="language-javascript">const url = new URL("http://localhost:8000/auth/login");
+
+let headers = {
+    "Accept": "application/json",
+    "Content-Type": "application/json",
+}
+
+fetch(url, {
+    method: "POST",
+    headers: headers,
+})
+    .then(response =&gt; response.json())
+    .then(json =&gt; console.log(json));</code></pre>
+<h3>HTTP Request</h3>
+<p><code>POST /auth/login</code></p>
+<!-- END_ac6527c96d4b9793a4c77ff1e22a8906 -->
+      </div>
+      <div class="dark-box">
+                        <div class="lang-selector">
+                                    <a href="#" data-language-name="bash">bash</a>
+                                    <a href="#" data-language-name="javascript">javascript</a>
+                              </div>
+                </div>
+    </div>
+  </body>
+</html>

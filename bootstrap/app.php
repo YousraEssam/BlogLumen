@@ -86,6 +86,7 @@ $app->register(Flugg\Responder\ResponderServiceProvider::class);
 // class_alias(Flugg\Responder\Facades\Responder::class, 'Responder');
 // class_alias(Flugg\Responder\Facades\Transformation::class, 'Transformation');
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(\Mpociot\ApiDoc\ApiDocGeneratorServiceProvider::class);
 
 
 /*
@@ -106,6 +107,8 @@ $app->router->group([
 });
 
 $app->register(Appzcoder\LumenRoutesList\RoutesCommandServiceProvider::class);
+
+$app->configure('apidoc');
 
 return $app;
 

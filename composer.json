@@ -10,6 +10,7 @@
         "flugger/laravel-responder": "^3.0",
         "fzaninotto/faker": "^1.8",
         "laravel/lumen-framework": "5.8.*",
+        "mpociot/laravel-apidoc-generator": "^3.16",
         "tymon/jwt-auth": "^1.0@dev",
         "zircote/swagger-php": "^3.0"
     },

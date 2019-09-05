@@ -6,12 +6,19 @@ use App\Transformers\ArticleTransformer;
 use App\Article;
 use Illuminate\Http\Request;
 
+/**
+ * @group Articles management
+ *
+ * APIs for managing articles
+ */
+
 class ArticleController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
+     * List All Articles.
+     * 
+     * @transformercollection \App\Transformers\ArticleTransformer
+     * @authenticated
      */
     public function index(){
 
@@ -27,10 +34,15 @@ class ArticleController extends Controller
         }
     }
     /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * Create and Store a newly created Article.
+     * @transformercollection \App\Transformers\ArticleTransformer
+     * @authenticated
+     * @bodyParam main_title       string     required The title of the Article.
+     * @bodyParam secondary_title  string     required The title of the post.
+     * @bodyParam content          string     required The title of the post.
+     * @bodyParam image            image      required This is required and must be an image.
+     * @bodyParam author_id        int        required The ID of an existing author.
+     * 
      */
     public function store(Request $request){
         $this->validate($request, [
@@ -41,29 +53,32 @@ class ArticleController extends Controller
             'author_id' => 'required|integer'
         ]);
 
-        // $new_article = Article::create($request->all());
-        // if($new_article){
-        //     return responder()->success($new_article, ArticleTransformer::class)
-        //         ->with('Author')->only(['Author'=>['Name','Email Address','Location']])->respond();
-        // }else{
-        //     return responder()->error('Creation Failed')->respond();
-        // }
         if($request->hasFile('image') || $request['image']){
             
             $imageName = $request->file('image') ?? $request['image'];
             if($imageName){
                 $filename = $this->uploadImage($imageName, $request);
-                return Article::create($request->except('image')+['image' => $filename]);
+
+                $created_article = Article::create($request->except('image')+['image' => $filename]);
+
+                return responder()
+                    ->success($created_article, ArticleTransformer::class)
+                    ->with('Author')->only(['Author'=>['Name','Email Address','Location']])
+                    ->respond();
             }else{
-                return responder()->error('The uploaded file is not applicable');
+                return responder()->error('Creation Failed')->respond();
+            }
+        }else{
+                return responder()->error('The uploaded file is not applicable')->respond();
             }
         }
-    }
+    
     /**
-     * Display the specified resource.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
+     * Display a specific Article using Article ID.
+
+     * @transformercollection \App\Transformers\ArticleTransformer
+
+     * @authenticated
      */
     public function show($id){
 
@@ -79,11 +94,16 @@ class ArticleController extends Controller
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
+     * Update a specific Article using Article ID.
+
+     * @transformercollection \App\Transformers\ArticleTransformer
+
+     * @bodyParam main_title       string     required The title of the Article.
+     * @bodyParam secondary_title  string     required The title of the post.
+     * @bodyParam content          string     required The title of the post.
+     * @bodyParam image            image      required This is required and must be an image.
+     * @bodyParam author_id        int        required The ID of an existing author.
+     * @authenticated
      */
     public function update(Request $request, $id){
         $this->validate($request, [
@@ -99,22 +119,24 @@ class ArticleController extends Controller
         if($request->hasFile('image') || $request['image']){
 
             $imageName = $request->file('image') ?? $request['image'];
-
-            $filename = $this->uploadImage($imageName, $request);
-            $article->update($request->except('image')+['image' => $filename]);
-            // return $article;
-            return responder()->success($article, ArticleTransformer::class)
-                ->with('Author')->only(['Author'=>['Name','Email Address','Location']])->respond();
-                
+            if($imageName){
+                $filename = $this->uploadImage($imageName, $request);
+                $article->update($request->except('image')+['image' => $filename]);
+                return responder()->success($article, ArticleTransformer::class)
+                    ->with('Author')
+                    ->only(['Author'=>['Name','Email Address','Location']])
+                    ->respond();     
+            }else{
+                responder()->error('Update Failed')->respond();
+            }
         }else{
             return responder()->error('The uploaded image file is not applicable')->respond();
         }
     }
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param  \App\Article  $article
-     * @return \Illuminate\Http\Response
+     * Remove a specific Article using Article ID [Soft Delete].
+     * @transformercollection \App\Transformers\ArticleTransformer
+     * @authenticated
      */
     public function softDelete($id){
 
@@ -132,6 +154,16 @@ class ArticleController extends Controller
         }
     }
 
+     /**
+     * Upload Image.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Article  $article
+     * 
+     * @bodyParam image    image   required This is required and must be an image.
+     * @bodyParam request  object  required The ID of an existing author.
+     * @authenticated
+     */
     private function uploadImage($imageName, $request){
 
         $file_original_name = $imageName->getClientOriginalName();
