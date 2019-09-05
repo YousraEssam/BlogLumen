@@ -15,6 +15,17 @@ $router->get('/', function () use ($router) {
     return $router->router->version();
 });
 
+$router->post('/auth/login', 'AuthController@postLogin');
+
+$router->group(['middleware' => 'auth:api'], function($router)
+{
+    $router->get('/test', function(){
+        return response()->json([
+            'message' => 'Hello World!',
+        ]);
+    });
+});
+
 $router->group(['prefix' => 'api/authors'], function () use ($router) {
     $router->get('/', 'AuthorController@index');
     $router->post('/', 'AuthorController@store');

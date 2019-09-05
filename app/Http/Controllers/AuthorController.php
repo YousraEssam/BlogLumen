@@ -31,10 +31,13 @@ class AuthorController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email',
+            'password' => 'required',
             'location' => 'required',
         ]);
-
         $author = Author::create($request->all());
+        $hashedPass = app('hash')->make($request->password);
+        $author['password'] = $hashedPass;
+        $author->save();
         return $author;
     }
 
