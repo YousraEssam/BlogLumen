@@ -33,6 +33,7 @@ $router->group(['prefix' => 'api/authors'], function () use ($router) {
         'middleware' => 'auth:api',
         'uses' => 'AuthorController@store'
         ]);
+    // $router->post('/','AuthorController@store');
     $router->get('{author}', 'AuthorController@show');
     $router->put('{author}', 'AuthorController@update');
     $router->delete('{author}', 'AuthorController@softDelete');
@@ -55,4 +56,4 @@ $router->group(['prefix' => 'api/articles','middleware' => 'auth:api'], function
     -> in create method add author id to author_id from current author
     -> in update method check if the current author is the owner
     -> in delete method check if the current author is the owner
-*/
+*/ //use middleware

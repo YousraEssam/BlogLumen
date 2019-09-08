@@ -23,7 +23,7 @@ class ArticleController extends Controller
     public function index(){
 
         /* USING FRACTAL [TRANSFORMERS] with Flugger */
-        $article = Article::paginate(2);
+        $article = Article::paginate();
         if($article){
             return responder()->success($article, ArticleTransformer::class)
                     ->with('Author')

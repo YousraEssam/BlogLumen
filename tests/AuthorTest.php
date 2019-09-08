@@ -1,10 +1,11 @@
 <?php
 
 use Laravel\Lumen\Testing\DatabaseMigrations;
+use Laravel\Lumen\Testing\WithoutMiddleware;
 
 class AuthorTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, WithoutMiddleware;
     /**
      * /api/authors [GET]
      */
@@ -25,13 +26,14 @@ class AuthorTest extends TestCase
      * /api/authors [POST]
      */
     public function testShouldCreateAuthor(){
-        $parameters = factory('App\Author')->make()->toArray(); 
-        $this->post("api/authors",$parameters)
+        $parameters = factory('App\Author')->make();
+
+        $this->post("api/authors",$parameters->makeVisible('password')->toArray())
              ->seeStatusCode(200)
              ->seeInDatabase('authors',[
                  'name' => $parameters['name'],
                  'email' => $parameters['email']
-             ]);     
+             ]);
     }
     
     /**
@@ -39,8 +41,6 @@ class AuthorTest extends TestCase
      */
     public function testShouldUpdateAuthor(){
         $parameters = factory('App\Author')->create()->toArray();
-        // $response = $this->put('api/authors/5', $parameters, []);
-        // $this->assertEquals(200,$this->response->status()); 
         $this->put("api/authors/{$parameters['id']}",$parameters)
              ->seeStatusCode(200)
              ->seeInDatabase('authors',[
@@ -54,10 +54,6 @@ class AuthorTest extends TestCase
     public function testShouldDeleteAuthor(){
         $author = factory('App\Author')->create();
         $this->delete("api/authors/{$author->id}")
-             ->seeStatusCode(200)
-             ->seeInDatabase('authors',[
-                 'name' => $author['name'],
-                 'email' => $author['email']
-             ]);
+             ->seeStatusCode(200);
     }
 }

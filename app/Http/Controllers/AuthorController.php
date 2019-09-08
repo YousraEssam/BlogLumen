@@ -44,10 +44,11 @@ class AuthorController extends Controller
             'location' => 'required',
         ]);
 
-        $created_author = Author::create($request->all());
         $hashedPass = app('hash')->make($request->password);
-        $created_author['password'] = $hashedPass;
-        $created_author->save();
+        $request['password'] = $hashedPass;
+        
+        $created_author = Author::create($request->all());
+        
         if($created_author){
             return responder()
                 ->success($created_author, AuthorTransformer::class)
@@ -95,13 +96,13 @@ class AuthorController extends Controller
     /**
      * Remove a specific Author using Author ID.
      * @authenticated
-     * @transformercollection \App\Transformers\AuthorTransformer
      */
     public function softDelete($id)
     {
-        $author = Author::findOrFail($id)->delete();
+        $author = Author::findOrFail($id);
+        $author->delete();
         if($author){
-            return responder()->success($author, AuthorTransformer::class)->respond();
+            return response()->json(['message' => 'Deleted Successfully'], 200);
         }else{
             responder()->error('Delete Failed')->respond();
         }

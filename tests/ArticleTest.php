@@ -2,10 +2,11 @@
 
 use Illuminate\Http\UploadedFile;
 use Laravel\Lumen\Testing\DatabaseMigrations;
+use Laravel\Lumen\Testing\WithoutMiddleware;
 
 class ArticleTest extends TestCase
 {
-    use DatabaseMigrations;
+    use DatabaseMigrations, WithoutMiddleware;
     /**
      * /api/articles [GET]
      */
